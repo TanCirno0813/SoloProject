@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
     body {
         background-color: #121212;
         color: white;
-        font-family: Arial, sans-serif;
+        font-family: Arial, sans-serif; 
         margin: 0;
         padding: 0;
     }
