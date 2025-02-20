@@ -2,10 +2,11 @@
     pageEncoding="UTF-8"%>
     <%
 	//세션 체크
-	String userid = (String) session.getAttribute("userid");
-	if(userid == null){
+	String username = (String) session.getAttribute("username");
+	if(username == null){
 		response.sendRedirect("loginSuccess.jsp");
 	}
+	String password = (String) session.getAttribute("password");
 %>
 <!DOCTYPE html>
 <html>
@@ -16,9 +17,13 @@
 <body>
 <div>
 		<div >	
-			<h2>유저 명:<%=userid %></h2>
+			<h2>유저 명:<%=username %></h2>
 			
-		</div>	
+		</div>
+		<div >	
+			<h2>비밀번호:<%=password %></h2>
+			
+		</div>		
 		<div>
 			<p>로그인 성공</p>
 			<a href = "index.jsp">메인으로</a>

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%
+    String loggedInUser = (String) session.getAttribute("username");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +29,7 @@
     header a {
         color: #ffcc00;
         text-decoration: none;
-        margin-left: 15px;
+        
     }
 
     /* 네비게이션 바 스타일 */
@@ -136,17 +139,22 @@
 </head>
 <body>
 
- <header>
-        <table width="100%">
-            <tr>
-                <td><h1><a href = "index.jsp">🖥 키보드 쇼핑몰</a></h1></td>
-                <td align="right">
+<header>
+    <table width="100%">
+        <tr>
+            <td><h1><a href="index.jsp">🖥 키보드 쇼핑몰</a></h1></td>
+            <td align="right">
+                <% if (loggedInUser != null) { %>
+                    <span><%= loggedInUser %>님 안녕하세요</span> |
+                    <a href="logout.jsp">로그아웃</a>
+                <% } else { %>
                     <a href="login.jsp">로그인</a> | 
                     <a href="register.jsp">회원가입</a>
-                </td>
-            </tr>
-        </table>
-    </header>
+                <% } %>
+            </td>
+        </tr>
+    </table>
+</header>
 <!-- 네비게이션 바 -->
 <nav>
     <ul>
