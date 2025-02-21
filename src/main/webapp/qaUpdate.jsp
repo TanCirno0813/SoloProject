@@ -6,7 +6,7 @@
     String content = request.getParameter("content");
 
     String URL = "jdbc:mysql://localhost:3306/shoppingmall";
-    String sql = "UPDATE notices SET title = ?, content = ? WHERE id = ?";
+    String sql = "UPDATE questions SET title = ?, content = ? WHERE id = ?";
 
     Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -27,6 +27,6 @@
 <!-- 알림창 띄운 후, 상세보기 페이지로 이동 -->
 <script>
     alert("글 수정이 완료되었습니다.");
-    window.location.href = "noticeDetail.jsp?id=<%= id %>";
+    window.location.href = "qaDetail.jsp?id=<%= id %>";
 </script>
 	

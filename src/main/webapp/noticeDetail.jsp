@@ -52,9 +52,13 @@
         <p><%= content %></p>
     <br>
     <!-- 제품 목록으로 돌아가는 버튼 -->
-
+	
+	 <a href="noticeUpdateForm.jsp?id=<%=id%>">
+        <button>수정</button>
+    </a>
+    
     <a href="notice.jsp">
-        <button>취소</button>
+        <button>돌아가기</button>
     </a>
 </body>
 </html>

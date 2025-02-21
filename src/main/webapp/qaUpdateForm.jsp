@@ -6,7 +6,7 @@
 <%
 	Class.forName("com.mysql.cj.jdbc.Driver");
 	String url = "jdbc:mysql://localhost:3306/shoppingmall";
-	String sql = "select * from notices where id = "+request.getParameter("id");
+	String sql = "select * from questions where id = "+request.getParameter("id");
 	int id  = 0;
 	String title ="";
 	String content ="";
@@ -41,7 +41,7 @@
 </head>
 <body>
  <h1>글 수정</h1>
-    <form action=noticeUpdate.jsp>
+    <form action=qaUpdate.jsp>
     	<label>ID:</label> <input type="text" name="id" value="<%=id%>" required><br>
         <label>제목:</label> <input type="text" name="title" value="<%=title%>" required><br>
         <label>내용:</label> <textarea type="text" name="content" required><%=content%></textarea><br>
@@ -51,7 +51,7 @@
     <br>
     <!-- 제품 목록으로 돌아가는 버튼 -->
 
-    <a href="notice.jsp">
+    <a href="qa.jsp">
         <button>돌아가기</button>
     </a>
 </body>

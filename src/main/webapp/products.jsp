@@ -207,15 +207,22 @@
 
             while (rs.next()) {
     %>
-                <div class="product-card">
-                    <img src="<%= rs.getString("image_url") %>" alt="제품 이미지">
-                    <h3><%= rs.getString("name") %></h3>
-                    <p><%= rs.getString("description") %></p>
+               <div class="product-card">
+                    <!-- 제품 이미지 클릭 시 상세 페이지 이동 -->
+                    <a href="productsDetail.jsp?id=<%= rs.getInt("id") %>">
+                        <img src="<%= rs.getString("image_url") %>" alt="제품 이미지">
+                    </a>
+                    <!-- 제품명 클릭 시 상세 페이지 이동 -->
+                    <h3>
+                        <a href="productsDetail.jsp?id=<%= rs.getInt("id") %>" style="text-decoration: none; color: black;">
+                            <%= rs.getString("name") %>
+                        </a>
+                    </h3>
                     <p><strong><%= rs.getInt("price") %>원</strong></p>
                     <p>재고: <%= rs.getInt("stock") %>개</p>
                     <div class="button-container">
-                        <a href="productsUpdateForm.jsp?id=<%= rs.getString("id") %>" class="edit-btn">수정</a>
-                        <a href="javascript:void(0);" onclick="confirmDelete(<%= rs.getString("id") %>)" class="delete-btn">삭제</a>
+                        <a href="productsUpdateForm.jsp?id=<%= rs.getInt("id") %>" class="edit-btn">수정</a>
+                        <a href="javascript:void(0);" onclick="confirmDelete(<%= rs.getInt("id") %>)" class="delete-btn">삭제</a>
                     </div>
                 </div>
     <%

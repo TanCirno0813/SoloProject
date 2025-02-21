@@ -8,8 +8,8 @@
 
     String URL = "jdbc:mysql://localhost:3306/shoppingmall";
     String sql = "SELECT * FROM users WHERE username=? AND password=?";
-
-    try (Connection conn = DriverManager.getConnection(URL, "root", "1234");
+	
+	    try (Connection conn = DriverManager.getConnection(URL, "root", "1234");
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
         pstmt.setString(1, username);
