@@ -18,6 +18,7 @@
 
         if (rs.next()) {
             session.setAttribute("username", username);
+            session.setAttribute("user_id", rs.getInt("id")); // 로그인한 사용자의 user_id 저장
             response.sendRedirect("index.jsp"); // index.jsp로 이동
         } else {
 %>

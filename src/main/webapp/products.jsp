@@ -31,7 +31,7 @@
         text-decoration: none;
         
     }
-
+ 
     /* 네비게이션 바 스타일 */
     nav {
         background-color: black;
@@ -123,11 +123,12 @@
 
     /* 푸터 스타일 */
     footer {
-      background-color: #000;
-        text-align: center;
-        padding: 15px;
-        margin-top: 20px;
-    }
+	        background-color: #000;
+	        text-align: center;
+	        padding: 15px;
+	        margin-top: 20px;
+	        color: white;
+	    } 
 </style>
 <script>
     function confirmDelete(id) {
@@ -146,6 +147,7 @@
             <td align="right">
                 <% if (loggedInUser != null) { %>
                     <span><%= loggedInUser %>님 안녕하세요</span> |
+                    <a href="cart.jsp">🛒 장바구니</a> |  <!-- 장바구니 버튼 추가 -->
                     <a href="logout.jsp">로그아웃</a>
                 <% } else { %>
                     <a href="login.jsp">로그인</a> | 
@@ -161,7 +163,7 @@
         
         <li><a href="products.jsp">제품 리스트</a></li>
         <li><a href="notice.jsp">공지사항</a></li>
-        <li><a href="qa.html">Q&A 게시판</a></li>
+        <li><a href="qa.jsp">Q&A 게시판</a></li>
     </ul>
 </nav>
 
@@ -208,6 +210,7 @@
             while (rs.next()) {
     %>
                <div class="product-card">
+               
                     <!-- 제품 이미지 클릭 시 상세 페이지 이동 -->
                     <a href="productsDetail.jsp?id=<%= rs.getInt("id") %>">
                         <img src="<%= rs.getString("image_url") %>" alt="제품 이미지">
@@ -223,6 +226,11 @@
                     <div class="button-container">
                         <a href="productsUpdateForm.jsp?id=<%= rs.getInt("id") %>" class="edit-btn">수정</a>
                         <a href="javascript:void(0);" onclick="confirmDelete(<%= rs.getInt("id") %>)" class="delete-btn">삭제</a>
+                         <% if (loggedInUser != null) { %>
+       					 <a href="cartAdd.jsp?id=<%= rs.getInt("id") %>&quantity=1" class="add-btn">장바구니 추가</a>
+   						 <% } else { %>
+   	     				<a href="login.jsp" class="add-btn" style="background: gray;">로그인 필요</a>
+   						 <% } %>
                     </div>
                 </div>
     <%

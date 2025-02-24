@@ -2,6 +2,7 @@
 <%
     String loggedInUser = (String) session.getAttribute("username");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>

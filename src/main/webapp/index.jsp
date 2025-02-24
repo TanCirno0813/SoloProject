@@ -105,13 +105,14 @@
 </head>
 <body>
     <!-- 헤더 -->
-   <header>
+  <header>
     <table width="100%">
         <tr>
             <td><h1><a href="index.jsp">🖥 키보드 쇼핑몰</a></h1></td>
             <td align="right">
                 <% if (loggedInUser != null) { %>
                     <span><%= loggedInUser %>님 안녕하세요</span> |
+                    <a href="cart.jsp">🛒 장바구니</a> |  <!-- 장바구니 버튼 추가 -->
                     <a href="logout.jsp">로그아웃</a>
                 <% } else { %>
                     <a href="login.jsp">로그인</a> | 
