@@ -30,7 +30,7 @@
 	%>
 	            <script>
 	                alert("회원가입이 완료되었습니다.");
-	                window.location.href = "login.jsp"; // 로그인 페이지로 이동
+	                window.location.href = "../login/login.jsp"; // 로그인 페이지로 이동
 	            </script>
 	<%
 	        }

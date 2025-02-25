@@ -26,7 +26,7 @@
 		</div>		
 		<div>
 			<p>로그인 성공</p>
-			<a href = "index.jsp">메인으로</a>
+			<a href = "../index.jsp">메인으로</a>
 		</div>
 	</div>
 </body>

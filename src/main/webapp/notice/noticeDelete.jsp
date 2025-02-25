@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
  <%@page import="java.sql.*" %>
  <%
+ String role = (String) session.getAttribute("role");
+
+ if (role == null || !"ADMIN".equals(role)) {
+     out.println("<script>alert('관리자만 접근 가능합니다.'); history.back();</script>");
+     return;
+ }
  	String id = request.getParameter("id");
  	String URL = "jdbc:mysql://localhost:3306/shoppingmall";
  	String sql = "delete from notices where id="+id;

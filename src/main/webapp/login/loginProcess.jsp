@@ -2,7 +2,7 @@
 <%@ page import="java.sql.*" %>
 <%
     request.setCharacterEncoding("UTF-8");
-
+	Class.forName("com.mysql.cj.jdbc.Driver");
     String username = request.getParameter("username");
     String password = request.getParameter("password");
 
@@ -19,12 +19,13 @@
         if (rs.next()) {
             session.setAttribute("username", username);
             session.setAttribute("user_id", rs.getInt("id")); // 로그인한 사용자의 user_id 저장
-            response.sendRedirect("index.jsp"); // index.jsp로 이동
+            session.setAttribute("role", rs.getString("role"));  // ✅ role 저장
+            response.sendRedirect("../index.jsp"); // index.jsp로 이동
         } else {
 %>
             <script>
                 alert("로그인 실패! 아이디 또는 비밀번호를 확인하세요.");
-                window.location.href = "login.jsp";
+                window.location.href = "../login.jsp";
             </script>
 <%
         }

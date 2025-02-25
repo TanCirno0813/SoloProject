@@ -162,15 +162,7 @@
     키보드 쇼핑몰
 </header>
 
-<!-- 네비게이션 바 -->
-<nav>
-    <ul>
-        <li><a href="index.jsp">홈</a></li>
-        <li><a href="products.jsp">제품 리스트</a></li>
-        <li><a href="notice.jsp">공지사항</a></li>
-        <li><a href="qa.html">Q&A 게시판</a></li>
-    </ul>
-</nav>
+	
 
 <!-- 본문 슬라이드 배너 -->
 <div class="banner">🆕 신제품 추가 페이지 🆕</div>

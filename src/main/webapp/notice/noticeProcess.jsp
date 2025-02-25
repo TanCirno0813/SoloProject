@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.sql.*" %>
 <% 
+String role = (String) session.getAttribute("role");
+
+if (role == null || !"ADMIN".equals(role)) {
+    out.println("<script>alert('관리자만 글을 작성할 수 있습니다.'); history.back();</script>");
+    return;
+}
 	request.setCharacterEncoding("UTF-8");
 	String title =  request.getParameter("title");
 	String content =  request.getParameter("content");
