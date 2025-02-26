@@ -14,18 +14,19 @@
     String date = "";
     String writer = "";
     int views = 0;
+    String fileName = null; // 🔸 여기에 추가해줌 (미리 선언)
 
     try {
         conn = DriverManager.getConnection(url, "root", "1234");
 
-        // 1️⃣ 조회수 증가 쿼리 실행
+        // 조회수 증가
         String updateSql = "UPDATE notices SET views = views + 1 WHERE id = ?";
         pstmt = conn.prepareStatement(updateSql);
         pstmt.setInt(1, id);
         pstmt.executeUpdate();
         pstmt.close();
 
-        // 2️⃣ 게시글 정보 가져오기
+        // 게시글 정보 가져오기
         String selectSql = "SELECT * FROM notices WHERE id = ?";
         pstmt = conn.prepareStatement(selectSql);
         pstmt.setInt(1, id);
@@ -36,7 +37,8 @@
             writer = rs.getString("writer");
             content = rs.getString("content");
             date = rs.getString("created_at");
-            views = rs.getInt("views");  // 조회수 가져오기
+            views = rs.getInt("views");
+            fileName = rs.getString("file_name"); // 🔸 ResultSet 닫기 전에 미리 가져오기
         }
     } catch (Exception e) {
         e.printStackTrace();
@@ -46,7 +48,7 @@
         if (conn != null) conn.close();
     }
 
-    // 현재 로그인한 사용자의 role 가져오기
+    // 로그인한 사용자의 role 가져오기
     String role = (String) session.getAttribute("role");
 %>
 
@@ -65,26 +67,29 @@
 </head>
 <body>
     <h1>공지사항 상세보기</h1>
-   
+
     <p><strong>제목:</strong> <%= title %></p>
     <p><strong>작성자:</strong> <%= writer %></p>
     <p><strong>작성일:</strong> <%= date %></p>
-    <p><strong>조회수:</strong> <%= views %></p> <!-- 조회수 표시 -->
+    <p><strong>조회수:</strong> <%= views %></p>
     <hr>
     <p><%= content %></p>
     <br>
 
-    <!-- 수정 버튼 -->
-    <a href="noticeUpdateForm.jsp?id=<%= id %>">
-        <button>수정</button>
-    </a>
-
     <!-- 삭제 버튼 (ADMIN만 보이도록 설정) -->
     <% if ("ADMIN".equals(role)) { %>
+        <a href="noticeUpdateForm.jsp?id=<%= id %>">
+            <button>수정</button>
+        </a>
         <button onclick="confirmDelete(<%= id %>)">삭제</button>
     <% } %>
 
-    <!-- 목록으로 돌아가기 버튼 -->
+    <% if(fileName != null){ %>
+    <p><strong>첨부 파일:</strong>
+        <a href="fileDownload.jsp?fileName=<%=java.net.URLEncoder.encode(fileName,"UTF-8")%>"><%=fileName%></a>
+    </p>
+<% } %>
+
     <a href="notice.jsp">
         <button>돌아가기</button>
     </a>

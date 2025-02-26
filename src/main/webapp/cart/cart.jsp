@@ -3,9 +3,9 @@
 
 <%
     // 세션에서 로그인한 사용자 확인
-    String loggedInUser = (String) session.getAttribute("username");
+        String loggedInUser = (String) session.getAttribute("name");
     if (loggedInUser == null) {
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("../login.jsp");
         return;
     }
 
@@ -45,53 +45,81 @@
     }
 </script>
 <style>
-    /* 전체 배경 */
-    body {
-        background-color: #fffbf5;
-     
-        font-family: Arial, sans-serif; 
+      /* 전체 배경 */
+        body {
+        background-color: #fffefc; /* 조금 더 밝게 조정함 */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         margin: 0;
         padding: 0;
     }
 
-    /* 헤더 스타일 */
-    header {
-        background-color: #DDD4EB; 
-        padding: 15px 20px;
-    }
-    header h1 {
-        display: inline;
-    }
-    header a {
-       color: #9178B8;
-        text-decoration: none;
-       
-    }
+   .top-login {
+    background-color: #f9f4ff;
+    color: #6e57a5;
+    padding: 5px 20px;
+    font-size: 14px;
+    text-align: right;
+}
 
-    /* 네비게이션 바 */
-    nav {
-        background-color: #9178B8;
-        padding: 10px 0;
-        text-align: center;
-    }
-    nav ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    nav ul li {
-        display: inline;
-        margin: 0 15px;
-    }
-    nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        padding: 10px;
-    }
-    nav ul li a:hover {
-        color: #F2C6E1;
-    }
+.top-login a {
+    color: #6e57a5;
+    text-decoration: none;
+}
+
+.top-login a:hover {
+    text-decoration: underline;
+}
+
+/* 헤더와 네비게이션 통합 스타일 */
+header {
+    background-color: #DDD4EB;
+    padding: 10px 20px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo a {
+    color: #9178B8;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+/* 깔끔하고 심플한 네비게이션 스타일 */
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 25px;
+}
+
+.main-nav ul li a {
+    color: #6e57a5;
+    text-decoration: none;
+    padding: 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+}
+
+.main-nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 3px;
+    background-color: #9178B8;
+    transition: width 0.3s ease-in-out;
+}
+
+.main-nav ul li a:hover::after {
+    width: 100%;
+}
 
     /* 메인 컨텐츠 */
     main {
@@ -121,36 +149,34 @@
 </style>
 </head>
 <body>
+ <!-- 최상단 간략 로그인 파트 -->
+<div class="top-login">
+    <%
+        if (loggedInUser != null) {
+    %>
+        <span><%= loggedInUser %>님 안녕하세요</span> |
+        <a href="../cart/cart.jsp">🛒장바구니</a> |
+        <a href="../register/register_update_form.jsp">회원정보수정</a> |
+        <a href="../login/logout.jsp">로그아웃</a>    
+    <% } else { %>
+        <a href="../login/login.jsp">로그인</a> | 
+        <a href="../register/register.jsp">회원가입</a>
+    <% } %>
+</div>
 
-<!-- 헤더 -->
- <header>
-    <table width="100%">
-        <tr>
-            <td><h1><a href="../index.jsp">🖥 키보드 쇼핑몰</a></h1></td>
-            <td align="right">
-                <% if (loggedInUser != null) { %>
-                    <span><%= loggedInUser %>님 안녕하세요</span> |
-                    
-                    <a href="cart.jsp">🛒 장바구니</a> |  <!-- 장바구니 버튼 추가 -->
-                    <a href="../register/register_update_form.jsp">회원정보수정</a>| 
-                    <a href="../login/logout.jsp">로그아웃</a>	
-                <% } else { %>
-                    <a href="../login/login.jsp">로그인</a> | 
-                    <a href="../register/register.jsp">회원가입</a>
-                <% } %>
-            </td>
-        </tr>
-    </table>
+<!-- 로고 및 네비게이션 합친 헤더 -->
+<header>
+    <div class="header-container">
+        <h1 class="logo"><a href="../index.jsp">🖥 키보드 쇼핑몰</a></h1>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../products/products.jsp">제품 리스트</a></li>
+                <li><a href="../notice/notice.jsp">공지사항</a></li>
+                <li><a href="qa.jsp">Q&A 게시판</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
-
-<!-- 네비게이션 바 -->
-    <nav>
-        <ul>
-            <li><a href="../products/products.jsp">제품 리스트</a></li>
-            <li><a href="../notice/notice.jsp">공지사항</a></li>
-            <li><a href="../qa/qa.jsp">Q&A 게시판</a></li>
-        </ul>
-    </nav>
  <div class="banner">🛒 장바구니</div>   
 <table border="1">
     <tr>
@@ -176,7 +202,7 @@
     <tr>
         <td><img src="<%= imageUrl %>" width="80"></td>
         <td><%= productName %></td>
-        <td><%= price %>원</td>
+        <td><%= price * quantity %>원</td>
         <td>
             <button onclick="updateQuantity(<%= cartId %>, -1)">-</button>
             <span id="quantity-<%= cartId %>"><%= quantity %></span>

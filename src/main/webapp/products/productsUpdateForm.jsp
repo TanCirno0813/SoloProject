@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@page import="java.sql.*" %>
     <%
-    String loggedInUser = (String) session.getAttribute("username");
+     String loggedInUser = (String) session.getAttribute("name");
 %>
 <%
 	Class.forName("com.mysql.cj.jdbc.Driver");
@@ -41,67 +41,80 @@
 <meta charset="UTF-8">
 <title>제품 수정</title>
 <style>
-     body {
-        background-color: #121212;
-        font-family: Arial, sans-serif; 
-        color:white;
+   body {
+        background-color: #fffefc; /* 조금 더 밝게 조정함 */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         margin: 0;
         padding: 0;
     }
-        .login-container {
-            width: 300px;
-            margin: 100px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        header {
-        background-color: #000;
-        padding: 15px 20px;
-    }
-    header h1 {
-        display: inline;
-    }
-    header a {
-        color: #ffcc00;
-        text-decoration: none;
-       
-    }
-     nav {
-        background-color: #000;
-        padding: 10px 0;
-        text-align: center;
-    }
-    nav ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    nav ul li {
-        display: inline;
-        margin: 0 15px;
-    }
-    nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        padding: 10px;
-    }
-    nav ul li a:hover {
-        color: #ffcc00;
-    }
-        .form-group {
-            margin-bottom: 15px;
-        } 
-        
-        footer {
-	        background-color: #000;
-	        text-align: center;
-	        padding: 15px;
-	        margin-top: 20px;
-	        color: white;
-	    }
+
+   .top-login {
+    background-color: #f9f4ff;
+    color: #6e57a5;
+    padding: 5px 20px;
+    font-size: 14px;
+    text-align: right;
+}
+
+.top-login a {
+    color: #6e57a5;
+    text-decoration: none;
+}
+
+.top-login a:hover {
+    text-decoration: underline;
+}
+
+/* 헤더와 네비게이션 통합 스타일 */
+header {
+    background-color: #DDD4EB;
+    padding: 10px 20px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo a {
+    color: #9178B8;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+/* 깔끔하고 심플한 네비게이션 스타일 */
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 25px;
+}
+
+.main-nav ul li a {
+    color: #6e57a5;
+    text-decoration: none;
+    padding: 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+}
+
+.main-nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 3px;
+    background-color: #9178B8;
+    transition: width 0.3s ease-in-out;
+}
+
+.main-nav ul li a:hover::after {
+    width: 100%;
+}
 	     .form-container {
         background: white;
         color: black;
@@ -111,7 +124,14 @@
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-
+.login-container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
     .form-container h2 {
         text-align: center;
     }
@@ -143,35 +163,46 @@
         color: white;
         cursor: pointer;
     }
-
+footer {
+        background-color: #54485c;
+        text-align: center;
+        padding: 15px;
+        margin-top: 40px;
+        color: #F5F5F5;
+    }
   
     </style>
 </head>
 <body>
- <header>
-    <table width="100%">
-        <tr>
-            <td><h1><a href="index.jsp">🖥 키보드 쇼핑몰</a></h1></td>
-            <td align="right">
-                <% if (loggedInUser != null) { %>
-                    <span><%= loggedInUser %>님 안녕하세요</span> |
-                    <a href="logout.jsp">로그아웃</a>
-                <% } else { %>
-                    <a href="login.jsp">로그인</a> | 
-                    <a href="register.jsp">회원가입</a>
-                <% } %>
-            </td>
-        </tr>
-    </table>
+ <!-- 최상단 간략 로그인 파트 -->
+<div class="top-login">
+    <%
+        if (loggedInUser != null) {
+    %>
+        <span><%= loggedInUser %>님 안녕하세요</span> |
+        <a href="../cart/cart.jsp">🛒장바구니</a> |
+        <a href="../register/register_update_form.jsp">회원정보수정</a> |
+        <a href="../login/logout.jsp">로그아웃</a>    
+    <% } else { %>
+        <a href="../login/login.jsp">로그인</a> | 
+        <a href="../register/register.jsp">회원가입</a>
+    <% } %>
+</div>
+
+<!-- 로고 및 네비게이션 합친 헤더 -->
+<header>
+    <div class="header-container">
+        <h1 class="logo"><a href="../index.jsp">🖥 키보드 쇼핑몰</a></h1>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="products.jsp">제품 리스트</a></li>
+                <li><a href="../notice/notice.jsp">공지사항</a></li>
+                <li><a href="../qa/qa.jsp">Q&A 게시판</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
-<!-- 네비게이션 바 -->
-    <nav>
-        <ul>
-            <li><a href="products.jsp">제품 리스트</a></li>
-            <li><a href="notice.jsp">공지사항</a></li>
-            <li><a href="qa.jsp">Q&A 게시판</a></li>
-        </ul>
-    </nav>
+
     <div class="form-container">
   <h1>제품 수정</h1>
     <form action=productsUpdate.jsp>

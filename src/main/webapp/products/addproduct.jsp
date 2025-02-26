@@ -52,42 +52,79 @@
 <style>
     /* 전체 배경 스타일 */
     body {
-        background-color: #222;
-        color: white;
-        font-family: Arial, sans-serif;
+        background-color: #fffefc; /* 조금 더 밝게 조정함 */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         margin: 0;
         padding: 0;
     }
 
-    /* 헤더 스타일 */
-    header {
-        background-color: #111;
-        padding: 20px;
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-    }
+   .top-login {
+    background-color: #f9f4ff;
+    color: #6e57a5;
+    padding: 5px 20px;
+    font-size: 14px;
+    text-align: right;
+}
 
-    /* 네비게이션 바 스타일 */
-    nav {
-        background-color: black;
-        padding: 10px;
-        text-align: center;
-    }
-    nav ul {
-        list-style: none;
-        padding: 0;
-    }
-    nav ul li {
-        display: inline;
-        margin: 0 15px;
-    }
-    nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-    }
+.top-login a {
+    color: #6e57a5;
+    text-decoration: none;
+}
 
+.top-login a:hover {
+    text-decoration: underline;
+}
+
+/* 헤더와 네비게이션 통합 스타일 */
+header {
+    background-color: #DDD4EB;
+    padding: 10px 20px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo a {
+    color: #9178B8;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+/* 깔끔하고 심플한 네비게이션 스타일 */
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 25px;
+}
+
+.main-nav ul li a {
+    color: #6e57a5;
+    text-decoration: none;
+    padding: 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+}
+
+.main-nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 3px;
+    background-color: #9178B8;
+    transition: width 0.3s ease-in-out;
+}
+
+.main-nav ul li a:hover::after {
+    width: 100%;
+}
     /* 본문 슬라이드 배너 */
     .banner {
         width: 100%;
@@ -102,7 +139,7 @@
 
     /* 제품 추가 폼 스타일 */
     .form-container {
-        background: white;
+        background: #f9f4ff;
         color: black;
         max-width: 400px;
         margin: 40px auto;
@@ -147,12 +184,12 @@
     .cancel-btn { background: #dc3545; }
 
     /* 푸터 스타일 */
-    footer {
-        background-color: #111;
-        color: white;
+   footer {
+        background-color: #54485c;
         text-align: center;
-        padding: 10px;
-        margin-top: 20px;
+        padding: 15px;
+        margin-top: 40px;
+        color: #F5F5F5;
     }
 </style>
 </head>
