@@ -177,7 +177,7 @@ header {
     %>
         <span><%= loggedInUser %>님 안녕하세요</span> |
         <a href="../cart/cart.jsp">🛒장바구니</a> |
-        <a href="../register/register_update_form.jsp">회원정보수정</a> |
+        <a href="../register/checkpasswordForm.jsp">회원정보수정</a> |
         <a href="../login/logout.jsp">로그아웃</a>    
     <% } else { %>
         <a href="../login/login.jsp">로그인</a> | 

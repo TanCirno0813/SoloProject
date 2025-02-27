@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+
 <%
-String loggedInUser = (String) session.getAttribute("name");
+    // 세션에서 로그인한 사용자 정보 가져오기
+    String loggedInUser = (String) session.getAttribute("name");
+    String role = (String) session.getAttribute("role"); // 관리자 여부 확인
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -147,7 +151,53 @@ header {
     .edit-btn { background: #007bff; }
     .delete-btn { background: #dc3545; }
     .add-btn { background: #28a745; padding: 10px 15px; font-size: 16px; }
+	 /* 🔎 검색 폼 전체 컨테이너 (가운데 정렬) */
+    .search-wrapper {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
 
+    /* 🔹 검색 폼 스타일 */
+    .search-form {
+        display: flex;
+        align-items: center;
+        border: 2px solid #9178B8;  /* 보라색 테두리 */
+        background-color: #F6F1FF;
+        padding: 5px;
+        width: 320px;
+    }
+
+    /* 🔹 검색 입력 필드 */
+    .search-input {
+        border: none;
+        outline: none;
+        padding: 10px;
+        flex-grow: 1;
+        font-size: 16px;
+        background: transparent;
+        color: #4B2C80;
+    }
+
+    .search-input::placeholder {
+        color: #B29AC6;
+        font-style: italic;
+    }
+
+    /* 🔹 검색 버튼 */
+    .search-button {
+        border: none;
+        background-color: #9178B8;
+        color: white;
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+    }
+
+    .search-button:hover {
+        background-color: #6e57a5;
+    }
     /* 푸터 스타일 */
     footer {
 	         background-color: #54485c;
@@ -156,6 +206,8 @@ header {
         margin-top: 20px;
         color: #F5F5F5;
 	    } 
+	    
+        
 </style>
 <script>
     function confirmDelete(id) {
@@ -169,12 +221,10 @@ header {
 
 <!-- 최상단 간략 로그인 파트 -->
 <div class="top-login">
-    <%
-        if (loggedInUser != null) {
-    %>
+    <% if (loggedInUser != null) { %>
         <span><%= loggedInUser %>님 안녕하세요</span> |
         <a href="../cart/cart.jsp">🛒장바구니</a> |
-        <a href="../register/register_update_form.jsp">회원정보수정</a> |
+        <a href="../register/checkpasswordForm.jsp">회원정보수정</a> |
         <a href="../login/logout.jsp">로그아웃</a>    
     <% } else { %>
         <a href="../login/login.jsp">로그인</a> | 
@@ -200,12 +250,13 @@ header {
 <div class="banner">🔥 제품 목록 🔥</div>
 
 <!-- 검색 폼 -->
-<div style="text-align: right; margin: 20px;">
-    <form action="products.jsp" method="GET">
-        <input type="text" name="search" placeholder="제품 이름 검색">
-        <input type="submit" value="검색">
+<div class="search-wrapper">
+    <form action="products.jsp" method="GET"  class="search-form">
+        <input type="text" name="search" class="search-input" placeholder="제품 이름 검색" >
+        <button type="submit" class="search-button">🔍 검색</button>
     </form>
 </div>
+
 
 <!-- 제품 목록 -->
 <div class="product-container">
@@ -239,7 +290,6 @@ header {
             while (rs.next()) {
     %>
                <div class="product-card">
-               
                     <!-- 제품 이미지 클릭 시 상세 페이지 이동 -->
                     <a href="productsDetail.jsp?id=<%= rs.getInt("id") %>">
                         <img src="<%= rs.getString("image_url") %>" alt="제품 이미지">
@@ -253,13 +303,16 @@ header {
                     <p><strong><%= rs.getInt("price") %>원</strong></p>
                     <p>재고: <%= rs.getInt("stock") %>개</p>
                     <div class="button-container">
-                        <a href="productsUpdateForm.jsp?id=<%= rs.getInt("id") %>" class="edit-btn">수정</a>
-                        <a href="javascript:void(0);" onclick="confirmDelete(<%= rs.getInt("id") %>)" class="delete-btn">삭제</a>
-                         <% if (loggedInUser != null) { %>
-       					 <a href="../cart/cartAdd.jsp?id=<%= rs.getInt("id") %>&quantity=1" class="add-btn">장바구니 추가</a>
-   						 <% } else { %>
-   	     				<a href="login.jsp" class="add-btn" style="background: gray;">로그인 필요</a>
-   						 <% } %>
+                        <% if ("ADMIN".equals(role)) { %>
+                            <a href="productsUpdateForm.jsp?id=<%= rs.getInt("id") %>" class="edit-btn">수정</a>
+                            <a href="javascript:void(0);" onclick="confirmDelete(<%= rs.getInt("id") %>)" class="delete-btn">삭제</a>
+                        <% } %>
+                        
+                        <% if (loggedInUser != null) { %>
+                            <a href="../cart/cartAdd.jsp?id=<%= rs.getInt("id") %>&quantity=1" class="add-btn">장바구니 추가</a>
+                        <% } else { %>
+                            <a href="../login/login.jsp" class="add-btn" style="background: gray;">로그인 필요</a>
+                        <% } %>
                     </div>
                 </div>
     <%
@@ -277,10 +330,12 @@ header {
     %>
 </div>
 
-<!-- 제품 추가 버튼 -->
-<div style="text-align: center; margin-top: 20px;">
-    <a href="addproduct.jsp" class="add-btn">제품 추가</a>
-</div>
+<!-- 제품 추가 버튼 (ADMIN만 가능) -->
+<% if ("ADMIN".equals(role)) { %>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="addproduct.jsp" class="add-btn">제품 추가</a>
+    </div>
+<% } %>
 
 <footer>
     © 2025 키보드 쇼핑몰. All rights reserved.

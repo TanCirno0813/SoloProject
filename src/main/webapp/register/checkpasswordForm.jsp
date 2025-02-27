@@ -1,16 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+
 <%
-String loggedInUser = (String) session.getAttribute("name");
+    String loggedInUser = (String) session.getAttribute("name"); // 로그인한 사용자명
+    if (loggedInUser == null) {
+        response.sendRedirect("../login.jsp");
+        return;
+    }
+
+    String error = request.getParameter("error"); // 오류 메시지 처리
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>로그인</title>
-    <style>
-      /* 전체 배경 */
-    body {
+<meta charset="UTF-8">
+<title>회원정보 수정</title>
+
+<style>
+  body {
         background-color: #fffefc; /* 조금 더 밝게 조정함 */
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         margin: 0;
@@ -84,54 +92,79 @@ header {
 .main-nav ul li a:hover::after {
     width: 100%;
 }
+         .form-container {
+        background: #F6F1FF;
+        padding: 30px;
+        width: 400px;
+        margin: 100px auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        
+    }
 
-        .login-container {
-            width: 300px;
-            margin: 100px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-       
         .form-group {
             margin-bottom: 15px;
         }
-        input[type="text"], input[type="password"] {
-            width: 95%;
-            padding: 8px;
-            margin-top: 5px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #9178B8;
-            color: black;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        footer {
+       input {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #9178B8;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    
+    h2 {
+        color: #9178B8;
+        margin-bottom: 20px;
+    }
+ label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+    .btn {
+        background-color: #9178B8;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      	
+      		
+       
+    }
+    .btn:hover {
+        background-color: #6e57a5;
+    }
+
+    .error-msg {
+        color: red;
+        margin-bottom: 15px;
+    }
+	        footer {
 	        background-color: #54485c;
 	        text-align: center;
 	        padding: 15px;
 	        margin-top: 20px;
 	        color: #F5F5F5;
-	    } 
+	    }
     </style>
 </head>
 <body>
-  <div class="top-login">
+  <!-- 최상단 간략 로그인 파트 -->
+<div class="top-login">
     <%
         if (loggedInUser != null) {
     %>
         <span><%= loggedInUser %>님 안녕하세요</span> |
         <a href="../cart/cart.jsp">🛒장바구니</a> |
-        <a href="../register/checkpasswordForm.jsp">회원정보수정</a> |
+        <a href="../register/register_update_form.jsp">회원정보수정</a> |
         <a href="../login/logout.jsp">로그아웃</a>    
     <% } else { %>
-        <a href="login.jsp">로그인</a> | 
-        <a href="../register/register.jsp">회원가입</a>
+        <a href="../login/login.jsp">로그인</a> | 
+        <a href="register.jsp">회원가입</a>
     <% } %>
 </div>
 
@@ -148,22 +181,21 @@ header {
         </nav>
     </div>
 </header>
-    <div class="login-container">
-        <h2>로그인</h2>
-        <form action="loginProcess.jsp" method="post">
-            <div class="form-group">
-                <label for="userid">아이디:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">비밀번호:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">로그인</button>
-        </form>
-    </div>
-    <footer>
+<div class="form-container">
+    <h2>🔑 비밀번호 확인</h2>
+
+    <% if (error != null) { %>
+        <p class="error-msg">⚠ 비밀번호가 일치하지 않습니다.</p>
+    <% } %>
+
+    <form action="check_password.jsp" method="post">
+        <label>비밀번호:</label>
+        <input type="password" name="password" required>
+        <button type="submit" class="btn">확인</button>
+    </form>
+</div>
+<footer>
         <p>© 2025 키보드 쇼핑몰. All rights reserved.</p>
     </footer>
 </body>
-</html> 
+</html>

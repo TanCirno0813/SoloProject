@@ -138,13 +138,108 @@ header {
         font-size: 24px;
         font-weight: bold;
     }
+     /* 메인 컨텐츠 */
+    .cart-container {
+        width: 80%;
+        margin: 40px auto;
+        background: #F6F1FF;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .cart-container h2 {
+        text-align: center;
+        color: #9178B8;
+        margin-bottom: 20px;
+    }
+
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .cart-table th, .cart-table td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+    }
+
+    .cart-table th {
+        background-color: #9178B8;
+        color: white;
+    }
+
+    .cart-table img {
+        width: 80px;
+        border-radius: 5px;
+    }
+
+    /* 수량 조절 버튼 */
+    .quantity-btn {
+        background-color: #6e57a5;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .quantity-btn:hover {
+        background-color: #9178B8;
+    }
+
+    /* 삭제 버튼 */
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .delete-btn:hover {
+        background-color: #c82333;
+    }
+
+    /* 총 가격 및 결제 버튼 */
+    .total-price {
+        text-align: right;
+        font-size: 20px;
+        margin: 20px;
+        font-weight: bold;
+    }
+
+    .checkout-btn {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 20px auto;
+        background-color: #28a745;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .checkout-btn:hover {
+        background-color: #218838;
+    }
     /* 푸터 스타일 */
     footer {
         background-color: #54485c;
         text-align: center;
         padding: 15px;
-        margin-top: 20px;
-        olor: #F5F5F5;
+        margin-top: 40px;
+        color: #F5F5F5;
     }
 </style>
 </head>
@@ -156,7 +251,7 @@ header {
     %>
         <span><%= loggedInUser %>님 안녕하세요</span> |
         <a href="../cart/cart.jsp">🛒장바구니</a> |
-        <a href="../register/register_update_form.jsp">회원정보수정</a> |
+        <a href="../register/checkpasswordForm.jsp">회원정보수정</a> |
         <a href="../login/logout.jsp">로그아웃</a>    
     <% } else { %>
         <a href="../login/login.jsp">로그인</a> | 
@@ -177,8 +272,9 @@ header {
         </nav>
     </div>
 </header>
+<div class="cart-container">
  <div class="banner">🛒 장바구니</div>   
-<table border="1">
+<table class="cart-table">
     <tr>
         <th>이미지</th>
         <th>제품명</th>
@@ -204,12 +300,12 @@ header {
         <td><%= productName %></td>
         <td><%= price * quantity %>원</td>
         <td>
-            <button onclick="updateQuantity(<%= cartId %>, -1)">-</button>
-            <span id="quantity-<%= cartId %>"><%= quantity %></span>
-            <button onclick="updateQuantity(<%= cartId %>, 1)">+</button>
+            <button class="quantity-btn" onclick="updateQuantity(<%= cartId %>, -1)">-</button>
+            <span  id="quantity-<%= cartId %>"><%= quantity %></span>
+            <button class="quantity-btn" onclick="updateQuantity(<%= cartId %>, 1)">+</button>
         </td>
         <td>
-            <button onclick="deleteItem(<%= cartId %>)">삭제</button>
+            <button class="delete-btn" onclick="deleteItem(<%= cartId %>)">삭제</button>
         </td>
     </tr>
 <%
@@ -217,15 +313,16 @@ header {
 %>
 </table>
 
-<h3>총 가격: <%= totalPrice %>원</h3>
+  <p class="total-price">총 가격: <%= totalPrice %>원</p>
 
-<a href="checkout.jsp">결제하기</a>
+  <a href="checkout.jsp" class="checkout-btn">결제하기</a>
+</div>
  <footer>
         <p>© 2025 키보드 쇼핑몰. All rights reserved.</p>
     </footer>
 </body>
 </html>
-
+a
 <%
     } catch (Exception e) {
         e.printStackTrace();
