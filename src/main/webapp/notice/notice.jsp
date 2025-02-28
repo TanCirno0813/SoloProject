@@ -324,7 +324,7 @@ header {
             pstmt = conn.prepareStatement(sql);
             int paramIndex = 1;
                     if (keyword != null && !keyword.trim().isEmpty()) {
-                        pstmt.setString(1, "%" + keyword + "%");
+                        pstmt.setString(paramIndex++, "%" + keyword + "%");
                     }
                     pstmt.setInt(paramIndex++, startRow);
                     pstmt.setInt(paramIndex++, pageSize);

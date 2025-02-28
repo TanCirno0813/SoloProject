@@ -85,21 +85,20 @@ header {
 .main-nav ul li a:hover::after {
     width: 100%;
 }
-       
-        /* 공지 작성 컨테이너 */
+       /* 작성 컨테이너 */
         .qa-container {
-            background-color: #F6F1FF;
+            background-color: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
-            width: 400px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 500px;
             text-align: center;
+            margin: 30px auto;
         }
 
-        /* 제목 */
         h2 {
             margin-bottom: 20px;
-            color: #9178B8;
+            color: #6e57a5;
         }
 
         /* 입력 폼 스타일 */
@@ -107,25 +106,24 @@ header {
             display: flex;
             flex-direction: column;
             align-items: center;
-            
         }
 
         label {
             font-size: 16px;
             margin-bottom: 5px;
             align-self: flex-start;
-            color:black;
+            color: black;
+            font-weight: bold;
         }
 
         input[type="text"],
-        textarea {
+        textarea,
+        input[type="file"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #666;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            background-color: #F5F5F5;
-            
             font-size: 14px;
         }
 
@@ -136,18 +134,19 @@ header {
 
         /* 버튼 스타일 */
         .btn {
-            background-color:#9178B8;
-            color: black;
+            background-color: #6e57a5;
+            color: white;
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
             width: 100%;
+            margin-top: 10px;
         }
 
         .btn:hover {
-            background-color: #DDD4EB; 
+            background-color: #5a478f;
         }
 
         /* 목록으로 버튼 */
@@ -160,6 +159,7 @@ header {
         .btn-back:hover {
             background-color: #777;
         }
+
          footer {
             background-color: #54485c;
             text-align: center;
@@ -207,7 +207,7 @@ header {
             <label>내용:</label>
             <textarea name="content" required></textarea>
 			<label>작성자:</label>
-              <input type="text" name="writer" value="<%= session.getAttribute("username") %>">
+              <input type="text" name="writer" value="<%= session.getAttribute("username") %>" >
 
             <input type="submit" value="등록" class="btn">
         </form>
